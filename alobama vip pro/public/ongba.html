@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AloBaMa — Ông/Bà</title>
+<meta name="theme-color" content="#EA580C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="appmode gp">
+
+<header class="app-top">
+  <div class="app-brand">📞 AloBaMa <span class="chip" id="famChip">Gia đình…</span></div>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button class="mini-btn plain" id="btnSwitch" title="Xem bên con cháu">🔄</button>
+    <button class="mini-btn plain" id="btnLogout" title="Đăng xuất">⏏</button>
+  </div>
+</header>
+
+<main class="app-body" id="appBody">
+
+  <!-- Trang chinh -->
+  <div class="gp-screen" id="gpHome">
+    <div class="gp-wrap">
+      <div class="gp-greet">
+        <div class="gp-hi" id="gpGreet">Xin chào! 👋</div>
+        <div class="gp-date" id="gpDate"></div>
+      </div>
+      <button id="btnOk" class="ok-btn">✅ TÔI ỔN</button>
+      <div class="gp-sub">Chạm nút để báo con cháu biết mình vẫn khỏe nhé!</div>
+
+      <!-- Xin phép chia sẻ vị trí (hiện khi con cháu có yêu cầu) -->
+      <div class="perm-ask" id="gpPermCard" hidden>
+        <div class="pa-ic">📍</div>
+        <div class="pa-tx"><b>Con cháu xin XEM VỊ TRÍ của bạn</b><br>Chỉ khi bạn cho phép, họ mới thấy bạn đang ở đâu.</div>
+        <div class="pa-row">
+          <button class="pa-btn yes" id="btnPermAllow" type="button">✅ Cho phép</button>
+          <button class="pa-btn no" id="btnPermDeny" type="button">❌ Để sau</button>
+        </div>
+      </div>
+
+      <h4 class="gp-h">💌 Lời nhắn từ con cháu</h4>
+      <div id="gpNotes"></div>
+
+      <h4 class="gp-h">⏰ Việc cần làm hôm nay</h4>
+      <div id="gpRems"></div>
+
+      <h4 class="gp-h">📍 Chia sẻ vị trí</h4>
+      <div class="loc-perm">
+        <div class="lp-row">
+          <span class="lp-ic">🔒</span>
+          <span class="lp-tx" id="lpText">Bật để con cháu thấy bạn đang ở đâu<small>Tắt bất cứ lúc nào — quyết định luôn thuộc về bạn</small></span>
+          <button class="lp-toggle off" id="btnLocToggle" type="button">TẮT</button>
+        </div>
+      </div>
+
+      <h4 class="gp-h">Việc có thể làm</h4>
+      <div class="gp-grid">
+        <button class="gp-feat c1" data-act="call" type="button"><span class="em">📞</span>Gọi con cháu</button>
+        <button class="gp-feat c2" data-act="msg" type="button"><span class="em">💬</span>Nhắn tin</button>
+        <button class="gp-feat c3" data-act="ai" type="button"><span class="em">🤖</span>Trợ lý AI<small>🎤 Nói chuyện</small></button>
+        <button class="gp-feat c4" data-act="games" type="button"><span class="em">♟️</span>Trò chơi</button>
+      </div>
+
+      <div class="sos-bar">
+        <button id="btnSos" class="sos-btn" type="button">🚨 KHẨN CẤP</button>
+        <div class="sos-hint">Chỉ dùng khi thật sự cần giúp ngay — con cháu sẽ biết tức thì</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nhan tin -->
+  <div class="gp-screen" id="gpMsgs" hidden>
+    <div class="gp-wrap">
+      <button class="back-btn js-gpback" type="button">← Về trang chính</button>
+      <h3 class="gp-title">💬 Nhắn tin với con cháu</h3>
+      <div id="gpMsgList" class="msg-list"></div>
+      <div class="dictate-row">
+        <button id="btnDictate" class="dictate-btn" type="button"><span class="dc-ic">🎤</span><span id="dictateTx">NÓI ĐỂ NHẮN TIN</span></button>
+      </div>
+      <div class="chips">
+        <button class="chip-btn gp-chip" data-text="Con ơi, bà đói bụng rồi 🍚">🍚 Bà đói bụng</button>
+        <button class="chip-btn gp-chip" data-text="Bà khỏe, con cứ yên tâm nha ❤️">❤️ Bà khỏe</button>
+        <button class="chip-btn gp-chip" data-text="Bà muốn đi dạo ngoài trời 🚶">🚶 Muốn đi dạo</button>
+        <button class="chip-btn gp-chip" data-text="Con gọi lại cho bà nhé 📞">📞 Gọi lại cho bà</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tro ly AI BIET NOI -->
+  <div class="gp-screen" id="gpAI" hidden>
+    <div class="gp-wrap">
+      <button class="back-btn js-gpback" type="button">← Về trang chính</button>
+      <h3 class="gp-title">🤖 Trợ lý biết nói</h3>
+
+      <div class="ai-head">
+        <div class="ai-orb" id="aiOrb">
+          <span class="ai-orb-ic" id="aiOrbIc">🤖</span>
+          <i class="ai-wave"><b></b><b></b><b></b><b></b></i>
+        </div>
+        <div class="ai-head-tx">
+          <div class="ai-state" id="aiState">Bấm nút 🎤 rồi nói ạ</div>
+          <div class="ai-sub" id="aiSub">Ví dụ: “Hôm nay tôi có việc gì?”</div>
+        </div>
+      </div>
+
+      <div id="aiList" class="msg-list ai-list"></div>
+      <div class="ai-heard" id="aiHeard" hidden></div>
+
+      <button id="btnMic" class="mic-btn" type="button">
+        <span class="mic-ic">🎤</span><span class="mic-tx" id="micTx">BẤM ĐỂ NÓI</span>
+      </button>
+
+      <div class="ai-row">
+        <button id="btnVoiceOn" class="ai-mini" type="button">🔊 Giọng đọc: BẬT</button>
+        <button id="btnHands" class="ai-mini" type="button">🗣 Rảnh tay: TẮT</button>
+      </div>
+      <div class="ai-row">
+        <button id="btnVoicePick" class="ai-mini" type="button">🎙 Giọng: Nữ Việt</button>
+        <button id="btnRepeat" class="ai-mini" type="button">🔁 Nghe lại</button>
+      </div>
+      <div class="ai-row">
+        <button id="btnRate" class="ai-mini" type="button">🙂 Tốc độ: Vừa</button>
+        <button id="btnAiClear" class="ai-mini" type="button">🧹 Xóa hội thoại</button>
+      </div>
+
+      <form id="aiForm" class="msg-in">
+        <input id="aiInput" class="in" maxlength="200" placeholder="Hoặc gõ câu hỏi cho trợ lý…">
+        <button type="submit" class="send-btn">Gửi</button>
+      </form>
+
+      <div class="chips" id="aiChips">
+        <button class="chip-btn ai-chip" type="button" data-q="Hôm nay tôi có việc gì?">⏰ Việc hôm nay</button>
+        <button class="chip-btn ai-chip" type="button" data-q="Nhắc tôi uống thuốc">💊 Uống thuốc</button>
+        <button class="chip-btn ai-chip" type="button" data-q="Đọc lời nhắn của con cháu">💌 Lời nhắn</button>
+        <button class="chip-btn ai-chip" type="button" data-q="Kể chuyện vui cho tôi nghe">😄 Chuyện vui</button>
+        <button class="chip-btn ai-chip" type="button" data-q="Gọi cho con cháu">📞 Gọi con cháu</button>
+        <button class="chip-btn ai-chip" type="button" data-q="Tôi ổn">✅ Báo tôi ổn</button>
+      </div>
+
+      <div class="ai-note" id="aiNote" hidden></div>
+    </div>
+  </div>
+
+  <!-- Tro choi -->
+  <div class="gp-screen" id="gpGames" hidden>
+    <div class="gp-wrap">
+      <button class="back-btn js-gpback" type="button">← Về trang chính</button>
+      <h3 class="gp-title">🎮 Chơi gì hôm nay?</h3>
+      <div class="gp-grid">
+        <button class="gp-feat game-card c3" data-act="xq" type="button"><span class="em">♟️</span>Cờ tướng<br><small>Đấu với máy 🤖</small></button>
+        <button class="gp-feat game-card c2" data-act="mem" type="button"><span class="em">🧠</span>Ghép đôi<br><small>Luyện trí nhớ</small></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Co tuong — dau voi may -->
+  <div class="gp-screen" id="gpXQ" hidden>
+    <div class="gp-wrap">
+      <button class="back-btn js-gpback" type="button">← Về trang chính</button>
+      <h3 class="gp-title" style="font-size:22px">♟️ Cờ tướng — đấu với máy</h3>
+      <div class="xq-wrap">
+        <div class="xq-toprow">
+          <span class="xq-turn" id="xqTurn">🔴 Lượt của BẠN</span>
+          <span style="display:flex;gap:8px">
+            <button id="btnXQUndo" class="xq-new" type="button">↩ Đi lại</button>
+            <button id="btnXQNew" class="xq-new" type="button">↻ Ván mới</button>
+          </span>
+        </div>
+        <div class="board-box">
+          <svg class="xq-svg" viewBox="0 0 900 1000">
+            <rect x="18" y="18" width="864" height="964" rx="20" fill="#F7E6C4" stroke="#8B5E34" stroke-width="7"/>
+            <g stroke="#8B5E34" stroke-width="3" fill="none">
+              <path d="M50 50H850 M50 150H850 M50 250H850 M50 350H850 M50 450H850 M50 550H850 M50 650H850 M50 750H850 M50 850H850 M50 950H850"/>
+              <path d="M50 50V950 M850 50V950"/>
+              <path d="M150 50V450 M250 50V450 M350 50V450 M450 50V450 M550 50V450 M650 50V450 M750 50V450"/>
+              <path d="M150 550V950 M250 550V950 M350 550V950 M450 550V950 M550 550V950 M650 550V950 M750 550V950"/>
+              <path d="M350 50L550 250 M550 50L350 250 M350 750L550 950 M550 750L350 950"/>
+            </g>
+            <text x="275" y="520" class="xq-river">楚 河</text>
+            <text x="625" y="520" class="xq-river">漢 界</text>
+          </svg>
+          <div class="dots" id="xqPieces"></div>
+          <div class="xq-over" id="xqOver" hidden>
+            <h3 id="xqOverMsg">🎉 Kết thúc!</h3>
+            <button id="btnXQAgain" type="button">♟️ Ván mới</button>
+          </div>
+        </div>
+        <div style="text-align:center;color:#B45309;font-size:12.5px;font-weight:700;margin-top:8px">Bạn cầm quân ĐỎ (đi trước) — máy cầm quân Đen</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ghep doi -->
+  <div class="gp-screen" id="gpMem" hidden>
+    <div class="gp-wrap">
+      <button class="back-btn js-gpback" type="button">← Về trang chính</button>
+      <h3 class="gp-title" style="font-size:22px">🧠 Ghép đôi — luyện trí nhớ</h3>
+      <div class="mem-stats" id="memMoves">Lượt lật: 0</div>
+      <div class="mem-grid" id="memGrid"></div>
+      <div style="text-align:center;margin-top:14px"><button id="btnMemNew" class="xq-new" type="button">↻ Chơi lại</button></div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal: goi ai? -->
+<div id="gpCallModal" class="modal">
+  <div class="call-card pick">
+    <h3>📞 Gọi cho ai?</h3>
+    <button class="contact" data-name="Minh (con trai)" data-ava="👨"><span class="c-ava">👨</span><span><b>Minh</b><br><small>con trai</small></span><span class="c-icon">📞</span></button>
+    <button class="contact" data-name="Hương (con gái)" data-ava="👩"><span class="c-ava">👩</span><span><b>Hương</b><br><small>con gái</small></span><span class="c-icon">📞</span></button>
+    <button class="contact" data-name="Tú (cháu nội)" data-ava="🧒"><span class="c-ava">🧒</span><span><b>Tú</b><br><small>cháu nội</small></span><span class="c-icon">📞</span></button>
+    <button class="mclose js-mclose" type="button">Đóng</button>
+  </div>
+</div>
+
+<!-- Modal: cuoc goi -->
+<div id="callModal" class="modal">
+  <div class="call-card">
+    <div class="avatar ring" id="callAva">👵</div>
+    <div class="call-name" id="callName"></div>
+    <div class="call-state" id="callState">Đang gọi...</div>
+    <button id="btnCallEnd" class="end-btn" type="button">📴 Kết thúc</button>
+  </div>
+</div>
+
+<!-- Overlay khan cap -->
+<div id="sosOv" class="sos-ov">
+  <div class="siren">🚨</div>
+  <h2>ĐÃ GỬI TÍN HIỆU<br>KHẨN CẤP!</h2>
+  <p>Con cháu đã nhận được thông báo kèm vị trí của bà.<br>Hãy giữ điện thoại bên mình, đừng lo lắng nhé!</p>
+  <button id="btnSosSafe" class="safe-btn" type="button">✅ Tôi đã ổn rồi</button>
+  <a class="sos113" href="tel:113">hoặc gọi ngay 113 — Công an</a>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script src="/js/common.js"></script>
+<script src="/js/voice.js"></script>
+<script src="/js/ongba.js"></script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng ký — AloBaMa</title>
+<meta name="theme-color" content="#EA580C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-bg">
+  <div class="auth-card">
+
+    <!-- Buoc 1: form dang ky -->
+    <div id="stepForm">
+      <a class="auth-logo" href="index.html"><span class="logo-badge">📞</span> AloBaMa</a>
+      <p class="auth-sub">Đăng ký 30 giây — hệ thống cấp ngay<br><b>2 tài khoản</b>: 1 cho bạn, 1 cho Ông/Bà</p>
+
+      <div class="err" id="err"></div>
+      <form id="regForm">
+        <div class="field">
+          <label for="name">Họ tên của bạn (con cháu) *</label>
+          <input class="in" id="name" placeholder="VD: Nguyễn Văn Minh" maxlength="40" required>
+        </div>
+        <div class="field">
+          <label for="phone">Số điện thoại *</label>
+          <input class="in" id="phone" inputmode="tel" placeholder="VD: 0901 234 567" maxlength="14" required>
+        </div>
+        <div class="field">
+          <label for="elderName">Tên gọi của Ông/Bà *</label>
+          <input class="in" id="elderName" placeholder="VD: Bà Lan" maxlength="30" required>
+        </div>
+        <div class="field">
+          <label for="username">Tên đăng nhập của bạn *</label>
+          <input class="in" id="username" placeholder="VD: minh_1985" autocomplete="off" maxlength="20" required>
+          <div class="hint">3–20 ký tự: chữ thường, số hoặc gạch dưới</div>
+        </div>
+        <div class="field">
+          <label for="password">Mật khẩu của bạn *</label>
+          <input class="in" id="password" type="password" placeholder="Tối thiểu 4 ký tự" autocomplete="new-password" required>
+          <div class="hint">💡 Ông/Bà sẽ nhận riêng tài khoản với mã PIN 4 số dễ nhớ</div>
+        </div>
+        <div class="field">
+          <label>Chọn gói (thanh toán sau khi ra mắt)</label>
+          <div class="plan-grid">
+            <label class="plan" id="planMonth">
+              <input type="radio" name="plan" value="month" hidden>
+              <b>59.000đ</b><small>/tháng/gói</small>
+            </label>
+            <label class="plan sel" id="planYear">
+              <input type="radio" name="plan" value="year" hidden checked>
+              <b>600.000đ</b><small>/năm/gói</small>
+              <span class="badge-sale">🔥 Tiết kiệm 108.000đ</span>
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%" id="btnReg" type="submit">🎉 Đăng ký &amp; nhận 2 tài khoản</button>
+        <p class="auth-alt" style="margin-top:12px">Đã có tài khoản? <a href="login.html">Đăng nhập</a> · <a href="index.html">Trang chủ</a></p>
+      </form>
+    </div>
+
+    <!-- Buoc 2: thanh cong -->
+    <div id="stepDone" hidden>
+      <div class="success-emoji">🎉</div>
+      <h2 style="text-align:center;font-size:24px;margin:6px 0 4px">Đăng ký thành công!</h2>
+      <p class="auth-sub" style="margin-bottom:14px">Gia đình <b id="doneCode">GD-XXXX</b> · <span id="donePlan"></span><br>
+      <span style="color:#047857;font-weight:700">🎁 Bản MVP: chưa cần thanh toán</span></p>
+
+      <div class="cred">
+        <h4>👨‍👩‍👧 Tài khoản CON CHÁU (của bạn)</h4>
+        <div class="cred-row"><span>Tên đăng nhập</span><b id="cu">—</b><button type="button" class="copy" data-copy="cu">Sao chép</button></div>
+        <div class="cred-row"><span>Mật khẩu</span><b id="cp">—</b><button type="button" class="copy" data-copy="cp">Sao chép</button></div>
+      </div>
+      <div class="cred">
+        <h4>👵 Tài khoản ÔNG/BÀ (cho người thân)</h4>
+        <div class="cred-row"><span>Tên đăng nhập</span><b id="gu">—</b><button type="button" class="copy" data-copy="gu">Sao chép</button></div>
+        <div class="cred-row"><span>Mã PIN 4 số</span><b id="gp">—</b><button type="button" class="copy" data-copy="gp">Sao chép</button></div>
+        <p style="font-size:12px;color:var(--muted);margin:6px 0 0">📌 Ghi ra giấy và đặt cạnh điện thoại của ông bà. Ông bà chỉ cần đăng nhập 1 lần!</p>
+      </div>
+
+      <div style="display:grid;gap:10px;margin-top:18px">
+        <button class="btn btn-primary" id="btnGoFam" type="button" style="width:100%">👨‍👩‍👧 Vào app Con cháu →</button>
+        <button class="btn btn-ghost" id="btnGoGp" type="button" style="width:100%">👵 Xem giao diện Ông/Bà</button>
+      </div>
+      <p class="auth-alt"><a href="index.html">← Về trang chủ</a></p>
+    </div>
+
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

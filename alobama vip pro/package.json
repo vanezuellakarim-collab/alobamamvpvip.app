@@ -1,0 +1,13 @@
+{
+  "name": "alobama-mvp",
+  "version": "1.0.0",
+  "description": "AloBaMa — ket noi ong ba & con chau. MVP demo chay bang Node thuan, khong can cai thu vien.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "license": "MIT"
+}

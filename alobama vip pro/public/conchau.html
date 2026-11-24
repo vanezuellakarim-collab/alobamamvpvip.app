@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AloBaMa — Con/Cháu</title>
+<meta name="theme-color" content="#EA580C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="appmode fam">
+
+<header class="app-top">
+  <div class="app-brand">📞 AloBaMa <span class="chip" id="famChip">Gia đình…</span></div>
+  <div style="margin-left:auto;display:flex;gap:8px">
+    <button class="mini-btn plain" id="btnSwitch" title="Xem bên ông/bà">🔄</button>
+    <button class="mini-btn plain" id="btnLogout" title="Đăng xuất">⏏</button>
+  </div>
+</header>
+
+<main class="app-body">
+<div class="fam-wrap">
+
+  <!-- Bao SOS tu ong/ba -->
+  <div id="sosBanner" class="sos-banner" hidden>
+    <b id="sosName">🚨 Ông/Bà đang gặp khẩn cấp!</b>
+    <div class="na-meta" id="sosWhen">Đã nhận lúc …</div>
+    <div class="row">
+      <button id="btnBannerCall" type="button">📞 Gọi lại ngay</button>
+      <button id="btnBannerSafe" type="button">✓ Bà/bố đã ổn</button>
+    </div>
+  </div>
+
+  <!-- The trang thai -->
+  <div class="fam-card">
+    <div class="fam-head">
+      <div class="fam-ava">👵</div>
+      <div style="min-width:0">
+        <div class="fam-name" id="gpName">Ông/Bà</div>
+        <div class="fam-meta" id="famMeta">Gia đình…</div>
+        <span class="pill idle" id="pillOk">⏳ Chưa có báo cáo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Truy cap nhanh -->
+  <div class="qa-grid" style="margin-top:12px">
+    <button class="qa c1" data-act="call" type="button"><span class="em">📞</span>Gọi ngay</button>
+    <button class="qa c2" data-act="msg" type="button"><span class="em">💬</span>Nhắn tin</button>
+    <button class="qa c3" data-act="note" type="button"><span class="em">💌</span>Lời nhắn</button>
+    <button class="qa c4" data-act="rem" type="button"><span class="em">⏰</span>Nhắc việc</button>
+  </div>
+
+  <!-- Vi tri -->
+  <h4>📍 Vị trí của ông/bà</h4>
+  <div class="fam-card">
+    <div id="locAllowedBox">
+      <div class="map">
+        <svg viewBox="0 0 400 190" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="190" fill="#EAF3EA"/>
+          <g fill="#DCEBDD"><rect x="18" y="14" width="86" height="52" rx="6"/><rect x="128" y="14" width="96" height="52" rx="6"/><rect x="248" y="14" width="134" height="52" rx="6"/><rect x="18" y="92" width="86" height="80" rx="6"/><rect x="128" y="92" width="96" height="34" rx="6"/><rect x="248" y="92" width="60" height="80" rx="6"/><rect x="332" y="92" width="50" height="80" rx="6"/></g>
+          <g fill="#C9DFCA"><circle cx="285" cy="130" r="26"/><rect x="128" y="138" width="96" height="34" rx="6"/></g>
+          <g stroke="#FDF3D8" stroke-width="11" stroke-linecap="round"><path d="M6 78H394"/><path d="M118 6V184"/><path d="M240 6V184"/><path d="M6 182H394" stroke-width="9"/></g>
+          <g stroke="#F6E4B5" stroke-width="2" stroke-dasharray="7 8"><path d="M6 78H394"/><path d="M118 6V184"/><path d="M240 6V184"/></g>
+        </svg>
+        <div class="pin" id="pin" style="left:52%;top:42%">📍</div>
+        <div class="map-label" id="mapLabel">Đang định vị…</div>
+      </div>
+      <div class="loc-addr" id="locAddr">Chưa có dữ liệu vị trí</div>
+      <div class="loc-time" id="locWhen"></div>
+      <div class="row-between">
+        <span class="count" id="locCount"></span>
+        <button id="btnLocRefresh" class="btn-ghost" type="button">🔄 Cập nhật vị trí mới</button>
+      </div>
+    </div>
+
+    <div id="locLockBox" class="loc-lock" hidden>
+      <div class="lk">🔒</div>
+      <div class="lk-t" id="lockName">…chưa cho phép chia sẻ vị trí</div>
+      <div class="lk-s">Quyết định này thuộc về ông/bà — hãy gửi lời đề nghị nhẹ nhàng nhé 💛</div>
+      <button id="btnAskLoc" class="btn-ghost" type="button">📩 Xin bà/bố bật chia sẻ vị trí</button>
+      <div class="pend" id="askPending" hidden>⏳ Đã gửi lời đề nghị… ông/bà sẽ quyết định trên máy của họ</div>
+    </div>
+  </div>
+
+  <!-- Loi nhan -->
+  <h4 id="secNote">💌 Gửi lời nhắn yêu thương</h4>
+  <div class="fam-card">
+    <div id="noteList"></div>
+    <form id="noteForm" class="msg-in">
+      <input id="noteInput" class="in" maxlength="120" placeholder="VD: Mẹ nhớ uống thuốc giờ 8h nhé!" required>
+      <button type="submit" class="send-btn">Gửi</button>
+    </form>
+  </div>
+
+  <!-- Nhac viec -->
+  <h4 id="secRem">⏰ Nhắc việc cho ông/bà</h4>
+  <div class="fam-card">
+    <div id="remList"></div>
+    <form id="remForm" class="rem-form">
+      <div class="rem-row">
+        <input id="remInput" class="in" maxlength="80" placeholder="Việc cần nhắc (VD: uống thuốc sáng)" required>
+        <input id="remTime" class="in" type="time" required>
+      </div>
+      <button type="submit" class="send-btn">＋ Thêm nhắc việc</button>
+    </form>
+  </div>
+
+  <!-- Nhan tin -->
+  <h4 id="secMsg">💬 Nhắn tin với ông/bà</h4>
+  <div class="fam-card" style="margin-bottom:24px">
+    <div id="msgList" class="msg-list"></div>
+    <div class="chips" style="margin-top:10px">
+      <button class="chip-mini" type="button" data-text="Mẹ ơi, hôm nay mẹ khỏe không ạ? ❤️">Hỏi thăm</button>
+      <button class="chip-mini" type="button" data-text="Cuối tuần này con về thăm mẹ nhé! 🏠">Báo về thăm</button>
+      <button class="chip-mini" type="button" data-text="Mẹ nhớ uống thuốc đúng giờ nha mẹ 🍚">Nhắc thuốc</button>
+    </div>
+    <form id="msgForm" class="msg-in">
+      <input id="msgInput" class="in" maxlength="200" placeholder="Nhắn tin cho ông/bà…" required>
+      <button type="submit" class="send-btn">Gửi</button>
+    </form>
+  </div>
+
+</div>
+</main>
+
+<!-- Modal cuoc goi -->
+<div id="callModal" class="modal">
+  <div class="call-card">
+    <div class="avatar ring" id="callAva">👵</div>
+    <div class="call-name" id="callName"></div>
+    <div class="call-state" id="callState">Đang gọi...</div>
+    <button id="btnCallEnd" class="end-btn" type="button">📴 Kết thúc</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script src="/js/common.js"></script>
+<script src="/js/conchau.js"></script>
+</body>
+</html>

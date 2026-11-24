@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Đăng nhập — AloBaMa</title>
+<meta name="theme-color" content="#EA580C">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📞</text></svg>">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-bg">
+  <div class="auth-card">
+    <a class="auth-logo" href="index.html"><span class="logo-badge">📞</span> AloBaMa</a>
+    <p class="auth-sub">Đăng nhập để vào đúng giao diện của bạn:<br>👨‍👩‍👧 Con cháu hoặc 👵 Ông/Bà</p>
+
+    <div class="err" id="err"></div>
+    <form id="loginForm">
+      <div class="field">
+        <label for="username">Tên đăng nhập</label>
+        <input class="in" id="username" autocomplete="username" placeholder="VD: minh_1985 hoặc ongba1234" required>
+      </div>
+      <div class="field">
+        <label for="password">Mật khẩu</label>
+        <input class="in" id="password" type="password" autocomplete="current-password" placeholder="••••" required>
+      </div>
+      <button class="btn btn-primary" style="width:100%" id="btnLogin" type="submit">Đăng nhập →</button>
+    </form>
+
+    <div class="demo-box">
+      <b>⚡ Xem nhanh bằng tài khoản demo:</b> cùng 1 gia đình, 2 vai trò.
+      <div class="demo-row">
+        <button type="button" class="chip-mini" data-u="demo" data-p="1234">👨‍👩‍👧 Con cháu — demo / 1234</button>
+        <button type="button" class="chip-mini" data-u="ongba1234" data-p="1234">👵 Ông/Bà — ongba1234 / 1234</button>
+      </div>
+    </div>
+
+    <p class="auth-alt">Chưa có tài khoản? <a href="register.html">Đăng ký dùng thử miễn phí</a><br><a href="index.html" style="color:var(--muted)">← Về trang chủ</a></p>
+  </div>
+</div>
+<script src="/js/common.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>
